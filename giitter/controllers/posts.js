@@ -1,6 +1,12 @@
+const crypto = require('crypto');
+
 exports.get = (req, res) => {
+    const user = {
+        ...req.session, 
+        imgMD5: crypto.createHash('md5').update(req.session.email).digest('hex')
+    };
     res.render('posts.ejs', {
-        user: req.session
+        user: user
     });
 };
 
